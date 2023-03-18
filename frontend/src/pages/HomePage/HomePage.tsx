@@ -36,7 +36,7 @@ const HomePage = () => {
                             </p>
                         </div>
                         <button 
-                            className="flex justify-center bg-primary-button rounded-full w-[35%] py-1 mx-auto mt-3">
+                            className="flex justify-center items-center bg-primary-button rounded-full w-[35%] py-1 mx-auto mt-3">
                             Next
                             <img src={arrowForwardImgURL} alt="next" className="ml-1 scale-90" draggable="false" />
                         </button>
