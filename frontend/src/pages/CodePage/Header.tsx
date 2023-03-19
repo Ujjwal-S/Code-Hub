@@ -10,7 +10,7 @@ const Header = () => {
             <img src={savedIconImg} className="mr-1 scale-125" alt="share" />
                 <span className="ml-2">Saved</span>
             </div>
-            <h2>Room Name</h2>
+            {/* <h2>Room Name</h2> */}
             <div className="flex justify-between items-center">
                 <button className="flex justify-between items-center border-2 border-gray-400 rounded-md px-3 py-1 mr-4">
                     <img src={shareIconImg} className="scale-75 mr-1" alt="share" />

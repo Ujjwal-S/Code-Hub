@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AcitveActivity, AppScreen } from "./types";
 
 const initialState: AppScreen = {
-    activeActivity: "files"
+    activeActivity: "files",
+    activeCodingLanguage: "go"
 }
 
 const appScreenSlice = createSlice({
