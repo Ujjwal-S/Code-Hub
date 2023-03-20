@@ -16,9 +16,9 @@ const CodePage = () => {
                         <SidePanel />
                     </ReflexElement>
                     
-                    <ReflexSplitter className="w-3 bg-code-page-secondary cursor-col-resize" />
+                    <ReflexSplitter className="w-3 bg-code-page-secondary cursor-col-resize z-50" />
 
-                    <ReflexElement className="min-w-0">
+                    <ReflexElement className="min-w-0 z-50">
                         <CodeEditor />
                     </ReflexElement>
 

@@ -13,6 +13,9 @@ export type AppScreen = {
 }
 export type CodeSlice = {
     activeCodingLanguage: CodingLanguages,
+    activeCodingLanguageIcon: {
+        [key in CodingLanguages]: string
+    },
     userInput: string,
     codeExecuting: boolean
 }

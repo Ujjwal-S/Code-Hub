@@ -18,6 +18,7 @@ const CodeEditor = () => {
                 className='grow'
                 theme="vs-dark"
                 onMount={handleOnMount}
+                language="go"
                 options={{
                     automaticLayout: true,
                     minimap: {enabled:false}
