@@ -13,7 +13,11 @@ module.exports = {
         'home-input-bg': '#262626',
         'home-box-bg': '#222222',
         'primary-button': '#0077FF',
-        'code-page-section-splitter': '#252525'
+        'code-page-secondary': '#252525',
+        'seperator': '#343434'
+      },
+      animation: {
+        'spin-slow': 'spin 2s linear infinite',
       }
     },
   },

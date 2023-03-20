@@ -12,7 +12,7 @@ const ActivityBar = () => {
 	const activeActivity = useAppSelector(state => state.appScreen.activeActivity)
 
 	return (
-		<div className='select-none sticky flex w-14 flex-col align-between h-full justify-between border-r border-[#343434] flex-shrink-0'>
+		<div className='select-none bg-code-page-secondary sticky flex w-14 flex-col align-between h-full justify-between border-r border-seperator flex-shrink-0'>
 			<div>
 				<div
 					onClick={() => dispatch(updateActiveActive("files"))}

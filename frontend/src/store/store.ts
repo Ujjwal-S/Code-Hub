@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import appScreenSlice from './appScreenSlice'
+import codeSlice from './codeSlice'
 
 export const store = configureStore({
   reducer: {
-    appScreen: appScreenSlice
+    appScreen: appScreenSlice,
+    codeContext: codeSlice 
   },
 })
 

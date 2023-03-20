@@ -2,6 +2,8 @@ import ActivityBar from "./ActivityBar";
 import Header from "./Header";
 import SidePanel from "./SidePanel/SidePanel";
 import { ReflexContainer, ReflexSplitter, ReflexElement } from "react-reflex";
+import CodeEditor from "./CodeEditor/CodeEditor";
+import InputOutput from "./InputOutput";
 
 const CodePage = () => {
     return (
@@ -14,12 +16,19 @@ const CodePage = () => {
                         <SidePanel />
                     </ReflexElement>
                     
-                    <ReflexSplitter className="w-3 bg-code-page-section-splitter cursor-col-resize" />
+                    <ReflexSplitter className="w-3 bg-code-page-secondary cursor-col-resize" />
 
-                    <ReflexElement>
-
-                        <div className="bg-red-600 w-full">Code Editor</div>
+                    <ReflexElement className="min-w-0">
+                        <CodeEditor />
                     </ReflexElement>
+
+                    <ReflexSplitter className="w-3 bg-code-page-secondary cursor-col-resize" />
+
+                    <ReflexElement flex={0.3} className="min-w-0 h-full">
+                        <InputOutput />
+                    </ReflexElement>
+
+                    
                 </ReflexContainer>
             </div>
         </div>

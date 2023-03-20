@@ -3,7 +3,6 @@ import { AcitveActivity, AppScreen } from "./types";
 
 const initialState: AppScreen = {
     activeActivity: "files",
-    activeCodingLanguage: "go"
 }
 
 const appScreenSlice = createSlice({

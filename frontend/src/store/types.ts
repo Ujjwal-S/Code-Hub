@@ -10,5 +10,9 @@ export type CodingLanguages =
 
 export type AppScreen = {
     activeActivity: AcitveActivity,
-    activeCodingLanguage: CodingLanguages
+}
+export type CodeSlice = {
+    activeCodingLanguage: CodingLanguages,
+    userInput: string,
+    codeExecuting: boolean
 }

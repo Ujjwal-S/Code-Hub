@@ -11,10 +11,10 @@ const fileIconLinks = {
 }
 
 const File = () => {
-    const codingLanguage = useAppSelector(state => state.appScreen.activeCodingLanguage)
+    const codingLanguage = useAppSelector(state => state.codeContext.activeCodingLanguage)
 
     return (
-        <div className="flex items-center ml-2 hover:bg-[#2a2d2e] hover:cursor-pointer">
+        <div className="flex items-center pl-2 hover:bg-[#2a2d2e] hover:cursor-pointer">
             <img src={fileIconLinks[codingLanguage]} className="w-5 relative -bottom-[1px] mr-1" alt="icon" />
             <span className="">main.go</span>
         </div>

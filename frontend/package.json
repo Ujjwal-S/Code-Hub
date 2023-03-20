@@ -9,11 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.4.6",
     "@reduxjs/toolkit": "^1.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
-    "react-reflex": "^4.0.12"
+    "react-reflex": "^4.0.12",
+    "y-monaco": "^0.1.4",
+    "y-webrtc": "^10.2.5",
+    "yjs": "^13.5.50"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
