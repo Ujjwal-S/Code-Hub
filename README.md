@@ -16,10 +16,10 @@ The ultimate code collaboration platform for developers. With a fully-featured c
 
 
 * **Real-time collaboration**: CodeHub allows you to work on code with your team members in real-time, making it easier to share ideas and troubleshoot issues together.
-* **Audio and video chat**: With built-in audio and video chat, you can communicate with your team members without having to switch to another platform.
+* **Audio and video chat**: With built-in audio and video chat, you can communicate with your team members without having to switch to another platform. <a href="#call">Screenshot</a>
 * **Fully-featured code editor**: CodeHub's code editor has all the features you need to write clean, efficient code, including syntax highlighting, autocompletion, and more.
 
-* **Code compilation**: CodeHub supports code compilation for all major programming languages, so you can test your code and debug errors directly within the platform.
+* **Code compilation**: CodeHub supports code compilation for all major programming languages, so you can run your code directly within the platform. <a href="#compilation">Watch</a>
 
 * **User-friendly interface**: CodeHub's interface is intuitive and easy to use, even for beginners. You don't need to be a coding expert to collaborate with your team members using CodeHub.
 
@@ -38,14 +38,13 @@ The ultimate code collaboration platform for developers. With a fully-featured c
 <img src="https://raw.githubusercontent.com/Ujjwal-S/Code-Hub/main/ReadmeFiles/home-page-screenshot.png?token=GHSAT0AAAAAAB5ULIMVTJZMQLILXLZIT3CWZAYPJ4A">
 <hr>
 
-<h3 align="center">Stay Connected with Video and Audio Calls 🤝</h3>
+<h3 id="call" align="center">Stay Connected with Video and Audio Calls 🤝</h3>
 <img src="https://raw.githubusercontent.com/Ujjwal-S/Code-Hub/main/ReadmeFiles/video-call-example-screenshot.png?token=GHSAT0AAAAAAB5ULIMVIHZ42QMMYMOGKWB2ZAYP7RQ">
 <hr>
 
-<h3 align="center">Compile and Run 🏃</h3>
-https://user-images.githubusercontent.com/53434192/226390733-92b64c51-81bd-42a0-a832-7eccfba8370e.webm
+<h3 id="compilation" align="center">Compile and Run 🏃</h3>
+<video src="https://user-images.githubusercontent.com/53434192/226396219-784af79a-bd32-41d2-8366-03b9056f295e.webm" />
 
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
