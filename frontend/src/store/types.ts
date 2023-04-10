@@ -10,6 +10,8 @@ export type CodingLanguages =
 
 export type AppScreen = {
     activeActivity: AcitveActivity,
+    roomName: string,
+    username: string
 }
 export type CodeSlice = {
     activeCodingLanguage: CodingLanguages,
