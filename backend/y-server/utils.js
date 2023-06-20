@@ -101,38 +101,6 @@ class WSSharedDoc extends Y.Doc {
      */
     this.awareness = new awarenessProtocol.Awareness(this)
     this.awareness.setLocalState(null)
-
-
-
-    /**
-     * Adds a connection to the list of connections for this document.
-     * @param {Object} conn - The connection object.
-     */
-    function addConnection (conn) {
-      if (!this.conns.has(conn)) {
-        this.conns.set(conn, new Set());
-        conn.addEventListener('close', () => {
-          // Remove all awareness states associated with the connection
-          const controlledIDs = this.conns.get(conn);
-          if (controlledIDs) {
-            this.awareness.setDiff(controlledIDs, []);
-            this.conns.delete(conn);
-            // If there are no more connections, destroy the document
-            if (this.conns.size === 0) {
-              this.destroy();
-            }
-          }
-        });
-      }
-    }
-
-
-
-
-
-
-
-    
     /**
      * @param {{ added: Array<number>, updated: Array<number>, removed: Array<number> }} changes
      * @param {Object | null} conn Origin is the connection that made the change
@@ -154,9 +122,6 @@ class WSSharedDoc extends Y.Doc {
       this.conns.forEach((_, c) => {
         send(this, c, buff)
       })
-      if (this.conns.size === 0) {
-        this.destroy();
-      }
     }
     this.awareness.on('update', awarenessChangeHandler)
     this.on('update', updateHandler)
@@ -235,15 +200,12 @@ const closeConn = (doc, conn) => {
     const controlledIds = doc.conns.get(conn)
     doc.conns.delete(conn)
     awarenessProtocol.removeAwarenessStates(doc.awareness, Array.from(controlledIds), null)
-    if ((doc.conns.size === 0 && persistence !== null) || (doc.conns.size === 0 )) {
+    if (doc.conns.size === 0 && persistence !== null) {
       // if persisted, we store state and destroy ydocument
       persistence.writeState(doc.name, doc).then(() => {
         doc.destroy()
       })
       docs.delete(doc.name)
-      if (this.conns.size === 0) {
-        this.destroy();
-      }
     }
   }
   conn.close()
@@ -299,9 +261,6 @@ exports.setupWSConnection = (conn, req, { docName = req.url.slice(1).split('?')[
     }
   }, pingTimeout)
   conn.on('close', () => {
-    if (this.conns.size === 0) {
-      this.destroy();
-    }
     closeConn(doc, conn)
     clearInterval(pingInterval)
   })

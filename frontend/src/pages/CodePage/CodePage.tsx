@@ -5,7 +5,7 @@ import { ReflexContainer, ReflexSplitter, ReflexElement } from "react-reflex";
 import CodeEditor from "./CodeEditor/CodeEditor";
 import InputOutput from "./InputOutput";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
 import { socket } from "./socket";
 import { toast } from "react-hot-toast";
@@ -15,8 +15,10 @@ import { toast } from "react-hot-toast";
 const CodePage = () => {
     const socketRef = useRef<any>(null);
     const navigate = useNavigate()
+    const location = useLocation()
     const roomName = useAppSelector(state => state.appScreen.roomName)
     const myusername = useAppSelector(state => state.appScreen.username)
+    const activeCodingLanguage = useAppSelector(state => state.codeContext.activeCodingLanguage)
     
     useEffect(() => {
         socket.connect()
@@ -29,11 +31,10 @@ const CodePage = () => {
             navigate('/')
         }
 
-        console.log(">>> MAI CHAALA")
-
         socket.emit('join', {
             roomName,
-            username: myusername
+            username: myusername,
+            language: location.state.roomMode === "create" ? activeCodingLanguage : ''
         })
 
         const userJoined = 

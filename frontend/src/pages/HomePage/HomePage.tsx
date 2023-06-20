@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { RoomModeType } from "../types";
 import Navbar from "./Navbar";
 import { v4 as uuidv4 } from 'uuid';
@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import diceImgURL from "../../assets/HomePage/dice.png"
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { updateRoomName, updateUsername } from "../../store/appScreenSlice";
+import { updateCodingLanguage } from "../../store/codeSlice";
 import { useNavigate } from "react-router-dom";
 
 
@@ -27,14 +28,57 @@ const HomePage = () => {
         toast.success('Created a new room.')
     }
 
-    const joinRoom = () => {
+    const getRoomInfo = (): Promise<boolean> => {
+        return new Promise((resolve, reject) => {
+            fetch("http://localhost:3000/api/getRoomLanguage", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify({
+                    roomName
+                })
+            })
+            .then(response => response.json())           
+            .then(json => {
+                if (json.roomLanguage) {
+                    dispatch(updateCodingLanguage(json.roomLanguage))
+                    return resolve(true)
+                }
+                return reject(false)
+            })
+            .catch(err => {
+                return reject(false)
+            })
+        })
+    }
+
+    const joinRoom = async () => {
         if (!roomName || !username) {
             return toast.error("Room Name & Username are required!")
         }
 
-        navigate('/editor/')
+        if (roomMode === "join") {
+            try{
+                await getRoomInfo();
+                navigate('/editor')
+            } catch (err) {
+                return toast.error("Something went wrong. Try Again!")
+            }
+        }
+
+        navigate('/editor', {
+            state: {
+                roomMode: "create"
+            }
+        })
     }
 
+    const updateLanguage =  (e:ChangeEvent<HTMLSelectElement>) => {
+        if (e.target.value === "python" || e.target.value === "cpp") {
+            dispatch(updateCodingLanguage(e.target.value))
+        }
+    }
     return (
         <div className="bg-primary text-white w-screen h-screen">
             <div className="flex flex-col max-w-7xl h-full mx-auto">
@@ -69,6 +113,19 @@ const HomePage = () => {
                                 placeholder="Username" 
                                 onChange={(e) => dispatch(updateUsername(e.target.value))}
                             />
+                            {
+                                roomMode === "create" 
+                                &&
+                                <div
+                                    className="outline-none text-gray-400 bg-home-input-bg px-4 py-2 rounded-xl w-full text-sm mt-4 flex justify-between items-center"
+                                >
+                                    <label htmlFor="langauge">Choose a Language</label>
+                                    <select name="language" id="langauge" className="outline-none text-gray-400 bg-home-input-bg hover:cursor-pointer" onChange={updateLanguage}>
+                                        <option value="python">Python</option>
+                                        <option value="cpp">C++</option>
+                                    </select>
+                                </div>
+                            }
                             <p className="text-sm text-secondary w-3/4 text-center mx-auto mt-6">
                                 {roomMode === "create"
                                     ? 'Create a room invite your colleagues and start coding.'

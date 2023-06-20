@@ -6,6 +6,8 @@ import arrowRepeatImgURL from "../../assets/CodePage/arrow_repeat.svg"
 const InputOutput = () => {
     const dispatch = useAppDispatch();
     const codeExecuting = useAppSelector(state => state.codeContext.codeExecuting)
+    const codeOutput = useAppSelector(state => state.codeContext.codeOutput)
+    const userCodeInput = useAppSelector(state => state.codeContext.userCodeInput)
 
     return (
         <ReflexContainer orientation="horizontal" className={`h-full flex flex-col min-w-[250px] ${codeExecuting && 'cursor-wait'}`}>
@@ -19,6 +21,7 @@ const InputOutput = () => {
                         onChange={(e) => dispatch(updateUserInput(e.target.value))}
                         disabled={codeExecuting}
                         placeholder="Your input goes here."
+                        value={userCodeInput}
                         ></textarea>
                     </div>
                 </div>
@@ -32,11 +35,11 @@ const InputOutput = () => {
                     { codeExecuting
                         ?
                             <div className="py-4 p-2 h-full w-full flex justify-center items-center animate-spin-slow">
-                                <img src={arrowRepeatImgURL} className="w-10 h-10" alt="" />
+                                <img src={arrowRepeatImgURL} className="w-10 h-10" alt="Executing.." />
                             </div>
                         :
                             <div className='py-4 p-2 h-full w-full'>
-                                <pre className=''></pre>
+                                <pre className=''>{codeOutput}</pre>
                             </div>
                     }
                 </div>

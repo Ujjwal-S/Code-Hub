@@ -1,14 +1,18 @@
+import { FormEvent } from "react"
 import runIconImg from "../../assets/CodePage/run.svg"
 import shareIconImg from "../../assets/CodePage/share.svg"
 import savedIconImg from "../../assets/CodePage/saved.svg"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { updateCodeExecutionStatus } from "../../store/codeSlice"
+import { updateCodeExecutionStatus, updateCodeOutput } from "../../store/codeSlice"
 import { toast } from "react-hot-toast"
 
 const Header = () => {
     const dispatch = useAppDispatch()
     const codeExecuting = useAppSelector(state => state.codeContext.codeExecuting)
     const roomName = useAppSelector(state => state.appScreen.roomName)
+    const language= useAppSelector(state => state.codeContext.activeCodingLanguage)
+    const input= useAppSelector(state => state.codeContext.userCodeInput)
+    const code= useAppSelector(state => state.codeContext.userCode)
 
     async function copyRoomName() {
         try{
@@ -17,6 +21,35 @@ const Header = () => {
         }catch(err) {
             toast.error("Something went wrong, try again")
         }
+    }
+
+    async function executeCode(e:FormEvent) {
+        dispatch(updateCodeExecutionStatus(true))
+        fetch("http://localhost:3000/api/compile", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify({
+                    language,
+                    code,
+                    input
+                })
+        })
+        .then(response => response.json())           
+        .then(json => {
+            dispatch(updateCodeExecutionStatus(false))
+            if (json.error) {
+                toast.error("Something went wrong :(")
+            }else {
+                dispatch(updateCodeOutput(json.output))
+            }
+        })
+        .catch(err => {
+            console.log("Error while trying to execute code -> ", err)
+            toast.error("Something went wrong :(")
+            dispatch(updateCodeExecutionStatus(false))
+        })
     }
 
     return (
@@ -34,7 +67,7 @@ const Header = () => {
                     <span>Share</span>
                 </button>
                 <button className={`${codeExecuting && 'animate-pulse'} flex justify-between items-center border-2 border-gray-400 rounded-md px-3 py-1 mr-4`}
-                    onClick={() => dispatch(updateCodeExecutionStatus(true))}
+                    onClick={executeCode}
                 >
                     <img src={runIconImg} className="scale-75 mr-1"  alt="run" />
                     <span>{codeExecuting ? 'Executing' : 'Run Code'}</span>

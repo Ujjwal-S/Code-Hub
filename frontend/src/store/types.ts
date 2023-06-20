@@ -1,12 +1,7 @@
 export type AcitveActivity = "files" | "find" | "settings" | "people"
 export type CodingLanguages =
     "cpp" |
-    "go" |
-    "java" |
-    "javascript" |
-    "python" |
-    "rust" |
-    "sql"
+    "python"
 
 export type AppScreen = {
     activeActivity: AcitveActivity,
@@ -18,6 +13,8 @@ export type CodeSlice = {
     activeCodingLanguageIcon: {
         [key in CodingLanguages]: string
     },
-    userInput: string,
+    userCodeInput: string,
+    userCode: string,
+    codeOutput: string,
     codeExecuting: boolean
 }

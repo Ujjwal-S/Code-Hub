@@ -30,13 +30,6 @@ server.on('upgrade', (request, socket, head) => {
   wss.handleUpgrade(request, socket, head, handleAuth)
 })
 
-server.on('close', (request, socket, head) => {
-  console.log("CONNNECTION CHOODD GAYA")
-  console.log("Request", request)
-  console.log("socket", socket)
-  console.log("head", head)
-})
-
 server.listen(port, host, () => {
   console.log(`running at '${host}' on port ${port}`)
 })

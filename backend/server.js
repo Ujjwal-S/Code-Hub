@@ -1,6 +1,7 @@
 const express = require('express')
 const http = require('http')
 const {Server} = require('socket.io')
+var bodyParser = require('body-parser')
 
 const app = express()
 const cors = require('cors')
@@ -9,6 +10,13 @@ app.use(
     origin: "*",
   })
 )
+
+app.use(express.json());
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+
 
 const server = http.createServer(app)
 
@@ -20,6 +28,7 @@ const io = require("socket.io")(server, {
 
 const userSocketMap = {}
 const userRoomMap = {}
+const roomNameLanguageMap = {}
 
 function getAllConnectedClients(roomName) {
 	return Array.from(io.sockets.adapter.rooms.get(roomName) || []).map(socketId => {
@@ -33,18 +42,16 @@ function getAllConnectedClients(roomName) {
 io.on('connection', (socket) => {
     console.log('socket connected', socket.id);
 	
-	socket.on("join", ({roomName, username}) => {
+	socket.on("join", ({roomName, username, language}) => {
 		userSocketMap[socket.id] = username
 		userRoomMap[socket.id] = roomName
+		if (language) {
+			roomNameLanguageMap[roomName] = language
+		}
 		socket.join(roomName);   // upsert
-
-		console.log("USER JOINED ROOM ->", roomName)
 
 		// notify other clients that a new user joined
 		const clients = getAllConnectedClients(roomName);
-		console.log("YEH RAHE CLIENTS->")
-		clients.forEach(client => console.log(client))
-		console.log('---------------------------')
 		clients.forEach( ({socketId}) => {
 			io.to(socketId).emit("joined", {
 				clients,
@@ -68,7 +75,14 @@ io.on('connection', (socket) => {
 	})
 })
 
+app.post('/api/getRoomLanguage', (req, res) => {
+	const {roomName} = req.body;
+	res.json({
+		roomLanguage: roomNameLanguageMap[roomName] || ""
+	})
+})
 
+app.use('/api/compile', require('./compile'))
 
 server.listen(3000, () => {
     console.log("Listening on Port 3000")
